@@ -1,0 +1,38 @@
+.navbar-lewagon {
+  justify-content: space-between;
+  background-color: transparent;
+  transition: 0.5s background-color ease;
+}
+
+.navbar-lewagon-white {
+  background-color: white;
+  i {
+    color: black;
+  }
+
+  .navbar-brand {
+    color: black;
+  }
+}
+
+.navbar-lewagon .navbar-collapse {
+  flex-grow: 0;
+}
+
+.navbar-lewagon .navbar-brand img {
+  width: 40px;
+}
+
+.navbar-traseu-yellow {
+  i,
+  a.navbar-brand,
+  a.navbar-brand i {
+    color: #ffcb20;
+  }
+
+  a.navbar-brand:hover,
+  a.navbar-brand:hover i,
+  i:hover {
+    color: white;
+  }
+}

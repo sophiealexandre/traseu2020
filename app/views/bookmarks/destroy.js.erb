@@ -1,0 +1,17 @@
+if (!<%= @bookmarks.size.positive? %>) {
+  element = document.querySelector('#bookmark a');
+  element.innerHTML = '<i class="far fa-star"></i>';
+}
+bookmark = document.querySelector('#bookmark-id-<%= @bookmark.id %>');
+// console.log(bookmark);
+if (bookmark) bookmark.remove();
+
+<% if @itinerary.present? %>
+// console.log("<%= @itinerary.country %>");
+elementTrue = document.querySelector('#bookmark-show-true');
+elementTrue.style.display = 'none';
+elementFalse = document.querySelector('#bookmark-show-false');
+elementFalse.style.display = 'block';
+
+elementFalse.innerHTML = `<%= link_to raw('<i class="far fa-star"></i>'), "#{itinerary_path(@itinerary)}", remote: true, method: :post, class: 'btn' %>`;
+<% end %>

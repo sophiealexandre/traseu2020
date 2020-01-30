@@ -1,0 +1,24 @@
+elementTrue = document.querySelector('<%= "#bookmark-create-id-#{@itinerary.id}" %>');
+elementFalse = document.querySelector('<%= "#bookmark-delete-id-#{@itinerary.id}" %>');
+
+status = <%= @itinerary.bookmark %>;
+console.log(status);
+
+if (status == 'true') {
+  elementTrue.style.display = 'none';
+  elementFalse.style.display = 'block';
+  console.log('true <%= @itinerary.id %>');
+} else {
+  elementTrue.style.display = 'block';
+  elementFalse.style.display = 'none';
+  console.log('false <%= @itinerary.id %>');
+}
+// alert(<%= @itinerary.id %>);
+element = document.querySelector('#bookmark a');
+<%# binding.pry %>
+if (<%= @bookmarks.size.positive? %>) {
+  element.innerHTML = '<i class="fas fa-star"></i>';
+} else {
+  element.innerHTML = '<i class="far fa-star"></i>';
+}
+// alert(<%= @bookmarks.size %>);

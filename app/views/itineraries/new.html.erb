@@ -1,0 +1,150 @@
+<%#= render "shared/banner_itineraries_show" %>
+<div class="container-fluid m-0 p-0">
+  <div class="country-banner d-flex align-items-center justify-content-center" style="height: 196px;margin-top: -60px;background: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url(https://res.cloudinary.com/pierreja/image/upload/v1575517050/TRASEU/Guests-admiring-Machu-Picchu-in-Peru_sujaju.jpg);background-position: center bottom;background-size: cover;">
+    <div class="country-name h1 mt-3">PERU</div>
+  </div>
+</div>
+<div class="container-fluid mt-3 mb-5">
+  <%#= render 'shared/recap-bar' %>
+  <div class="row">
+    <div class="col-12 col-sm-7">
+      <% @itineraries.each do |itinerary| %>
+      <div class="mr-3 mb-3" >
+        <div class="card main-card card<%= itinerary.id %>" data-carousel="slider-<%= itinerary.id %>">
+          <div class="card-body p-4">
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="d-flex align-items-end">
+                <div class="border-0 mr-3">
+                  <a class="itinerary-card-title-carousel" href="#"><p class="font-weight-bold lead m-0"><%= itinerary.title.capitalize %></p></a>
+                </div>
+                <div id="shared-by" class="m-0" style="padding-bottom: 1px;"><em>shared by&nbsp;<%= link_to itinerary.user.first_name.capitalize, user_path(itinerary.user), class: "text-muted" %></em></div>
+              </div>
+              <% bookmark = Bookmark.find_by(user: current_user, itinerary: itinerary) %>
+              <div id="bookmark-show-true-<%= itinerary.id %>">
+                <%= link_to raw('<i class="fas fa-bookmark"></i>'), itinerary_bookmarks_path(itinerary), remote: true, method: :patch, class: 'btn bookmark', "data-itinerary": "#{itinerary.id}", "data-bookmark": "#{bookmark ? true : false}" %>
+              </div>
+              <div id="bookmark-show-false-<%= itinerary.id %>">
+                <%= link_to raw('<i class="far fa-bookmark"></i>'), itinerary_bookmarks_path(itinerary), remote: true, method: :patch, class: 'btn bookmark', "data-itinerary": "#{itinerary.id}", "data-bookmark": "#{bookmark ? true : false}" %>
+              </div>
+              <%# raise %>
+            </div>
+            <p class="font-weight-normal"><%= itinerary.description %></p>
+            <div class= "d-flex justify-content-between align-items-end">
+              <div>
+                <div class="d-flex justify-content-start h-25 mb-2"><span></span><p class="input"><%= itinerary.days %> days</p></div>
+                <div class="d-flex justify-content-start h-25 mb-2"><span></span><p class="input">$<%= itinerary.budget %></p></div>
+                <div class="d-flex justify-content-start h-25 mb-2"><span class="card-rating-icon"></span><p class="input"><i class="fas fa-star"></i><%= rand(3.8..4.8).round(1) %></p></div>
+              </div>
+              <div>
+                <button class="button">
+                <%= simple_form_for(@new_itinerary) do |f| %>
+                  <%#= hidden_field_tag :id, value: itinerary.id %>
+                  <%= f.hidden_field :id, value: itinerary.id %>
+                  <%= f.hidden_field :experience, value: params[:search][:experience] %>
+                  <%= f.hidden_field :country, value: params[:search][:country] %>
+                  <%= f.hidden_field :budget, value: params[:search][:budget] %>
+                  <%= f.hidden_field :days, value: params[:search][:days] %>
+                  <%= f.submit "Build your adventure" %>
+                <% end %>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <% end %>
+    </div>
+
+    <div class="col-5 mb-2">
+      <%= render 'shared/itinerary-carousel' %>
+    </div>
+
+  </div>
+</div>
+<!-- ###################################################################################### -->
+<div class="container-fluid d-none">
+  <h1>Itineraries#new</h1>
+  <p>Find me in app/views/itineraries/new.html.erb</p>
+  <hr>
+  <% params_str = "utf8=✓&" %>
+  <% params[:search].each do |key, value| %>
+    <% params_str += "search%5B#{key}%5D=#{value}&" %>
+  <% end %>
+  <% params_str += "commit=Create+Search" %>
+  <% @itineraries.reverse.each do |itinerary| %>
+    <%# next if itinerary.id == 1 %>
+    <div class="card" style="width: 18rem;">
+      <img src="#" class="card-img-top" alt="image">
+      <div class="card-body">
+        <h5 class="card-title">Card with stretched link <%= itinerary.id %></h5>
+        <div class="card-text">
+          <ul class="list-unstyled">
+            <li><%= itinerary.cities.first.name if itinerary.cities.size.positive? %></li>
+            <li><%= itinerary.spots.first.title if itinerary.spots.size.positive? %></li>
+          </ul>
+        </div>
+        <!-- <a href="#" class="btn btn-primary stretched-link">Go somewhere</a> -->
+        <div class="d-flex justify-content-between">
+          <%= simple_form_for(@new_itinerary) do |f| %>
+            <%#= hidden_field_tag :id, value: itinerary.id %>
+            <%= f.hidden_field :id, value: itinerary.id %>
+            <%= f.hidden_field :experience, value: params[:search][:experience] %>
+            <%= f.hidden_field :country, value: params[:search][:country] %>
+            <%= f.hidden_field :budget, value: params[:search][:budget] %>
+            <%= f.hidden_field :days, value: params[:search][:days] %>
+            <%= f.submit "submit", class: "btn btn-info" %>
+          <% end %>
+          <%# raise %>
+          <% if itinerary.bookmark %>
+            <div id="bookmark-delete-id-<%= itinerary.id %>">
+              <%= link_to raw("<i class=\"fas fa-star\"></i>"), "#{new_itinerary_path}?#{params_str}&query=delete&itinerary=#{itinerary.id}", remote: true, method: :get, class: 'btn' %>
+            </div>
+            <div id="bookmark-create-id-<%= itinerary.id %>">
+              <%= link_to raw("<i class=\"far fa-star\"></i>"), "#{new_itinerary_path}?#{params_str}&query=create&itinerary=#{itinerary.id}", remote: true, method: :get, class: 'btn' %>
+            </div>
+            <script type="text/javascript">
+              elementTrue = document.querySelector('<%= "#bookmark-create-id-#{itinerary.id}" %>');
+              elementFalse = document.querySelector('<%= "#bookmark-delete-id-#{itinerary.id}" %>');
+              elementTrue.style.display = 'none';
+              elementFalse.style.display = 'block';
+            </script>
+          <% else %>
+            <div id="bookmark-delete-id-<%= itinerary.id %>">
+              <%= link_to raw("<i class=\"fas fa-star\"></i>"), "#{new_itinerary_path}?#{params_str}&query=delete&itinerary=#{itinerary.id}", remote: true, method: :get, class: 'btn' %>
+            </div>
+            <div id="bookmark-create-id-<%= itinerary.id %>">
+              <%= link_to raw("<i class=\"far fa-star\"></i>"), "#{new_itinerary_path}?#{params_str}&query=create&itinerary=#{itinerary.id}", remote: true, method: :get, class: 'btn' %>
+            </div>
+            <script type="text/javascript">
+              elementTrue = document.querySelector('<%= "#bookmark-create-id-#{itinerary.id}" %>');
+              elementFalse = document.querySelector('<%= "#bookmark-delete-id-#{itinerary.id}" %>');
+              elementTrue.style.display = 'block';
+              elementFalse.style.display = 'none';
+            </script>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<script>
+  cards = document.querySelectorAll(".itinerary-card-title-carousel");
+  // document.getElementById(cards[0].dataset.carousel).classList.remove("d-none");
+  cards.forEach((card) => {
+
+    console.log(card.dataset);
+    card.addEventListener('click', (event) => {
+      secondItineraryCarousel = document.getElementById("wild-itinerary");
+      firstItineraryCarousel = document.getElementById("normal-itinerary");
+
+      if (firstItineraryCarousel.classList.contains('d-none')) {
+        firstItineraryCarousel.classList.remove("d-none");
+        secondItineraryCarousel.classList.add("d-none");
+      } else {
+        secondItineraryCarousel.classList.remove("d-none");
+        firstItineraryCarousel.classList.add("d-none");
+      }
+    });
+  });
+</script>

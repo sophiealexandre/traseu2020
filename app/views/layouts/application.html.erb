@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>traseu</title>
+    <!-- Facebook -->
+    <meta property="og:title" content="Traseu, build your adventure" />
+    <meta property="og:description" content="For all DIY travelers. We have created a back-packer itinerary maker based your experience. From putting together a trip wishlist to creating a detailed itinerary; from pre-trip planning to on-trip access – all done in one place." />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:site_name" content="Traseu" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://traseu.co/" />
+    <meta property="og:image" content="https://res.cloudinary.com/pierreja/image/upload/v1575642044/TRASEU/VAN.jpg" />
+    <%= csrf_meta_tags %>
+    <%= action_cable_meta_tag %>
+    <%= stylesheet_link_tag 'application', media: 'all' %>
+    <%= stylesheet_pack_tag 'application', media: 'all' %> <!-- Uncomment if you import CSS in app/javascript/packs/application.js -->
+  </head>
+  <body class="d-flex flex-column">
+    <div id="page-content">
+      <%= render 'shared/navbar' %>
+      <%= render 'shared/flashes' %>
+      <div class=""><%= yield %></div>
+    </div>
+    <%= render 'shared/footer' %>
+
+    <%= javascript_include_tag 'application' %>
+    <%= javascript_pack_tag 'application' %>
+  </body>
+</html>

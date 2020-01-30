@@ -1,0 +1,10 @@
+<% if @bookmark %>
+  // console.log('create');
+  createBtn = document.querySelector("#bookmark-show-false");
+  // console.log(createBtn);
+  createBtn.style.display = 'none';
+  deleteBtn = document.querySelector("#bookmark-show-true");
+  // console.log(deleteBtn);
+  deleteBtn.style.display = 'block';
+  deleteBtn.innerHTML = `<a class="btn" data-remote="true" rel="nofollow" data-method="delete" href="/bookmarks?id=${<%= @bookmark.id %>}&itinerary=${<%= @bookmark.itinerary_id %>}"><i class="fas fa-star"></i></a>`;
+<% end %>

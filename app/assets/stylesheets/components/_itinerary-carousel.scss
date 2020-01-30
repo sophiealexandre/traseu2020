@@ -1,0 +1,15 @@
+.sticky-carousel {
+  position: sticky;
+  top: 68px;
+  img {
+    // height: 70vh;
+    height: calc(100vh - 96px);
+    object-fit: cover;
+  }
+}
+
+@media(max-width: 576px) {
+  .sticky-carousel {
+    display: none;
+  }
+}

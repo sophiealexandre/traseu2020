@@ -1,0 +1,63 @@
+#country-input-card1 {
+  background-image: url(https://image.flaticon.com/icons/svg/206/206772.svg);
+}
+
+#country-input-card1:hover {
+  background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url(https://image.flaticon.com/icons/svg/206/206772.svg);
+}
+
+#country-input-card2 {
+  background-image: url(https://image.flaticon.com/icons/svg/206/206664.svg);
+}
+
+#country-input-card2:hover {
+  background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url(https://image.flaticon.com/icons/svg/206/206664.svg);
+}
+
+#country-input-card3 {
+  background-image: url(https://image.flaticon.com/icons/svg/206/206654.svg);
+}
+
+#country-input-card3:hover {
+  background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url(https://image.flaticon.com/icons/svg/206/206654.svg);
+}
+
+#country-input-card4 {
+  background-image: url(https://image.flaticon.com/icons/svg/206/206618.svg);
+}
+
+#country-input-card4:hover {
+  background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url(https://image.flaticon.com/icons/svg/206/206618.svg);
+}
+
+a.budget-next:hover {
+  text-decoration: none;
+}
+
+.form-country-input {
+  background-size: cover;
+  background-position: center;
+  height: 100px;
+  width: 150px;
+  color: white;
+  font-weight: 500;
+  border-radius: 5px;
+  margin: 0 8px;
+  flex-wrap: wrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+
+  p {
+    opacity: 0;
+    text-transform: uppercase;
+  }
+
+  &:hover {
+    p {
+      opacity: 1;
+      transition: 0.4s ease-out;
+    }
+  }
+}

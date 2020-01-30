@@ -1,0 +1,49 @@
+elementTrue = document.querySelector('#bookmark-show-true');
+elementFalse = document.querySelector('#bookmark-show-false');
+
+// // add new city to set of @markers
+// const fitMapToMarkers = (map, markers) => {
+//   const bounds = new mapboxgl.LngLatBounds();
+//   markers.forEach(marker => bounds.extend([ marker.lng, marker.lat ]));
+//   map.fitBounds(bounds, { padding: 70, maxZoom: 6, duration: 0 });
+// };
+
+// const addMarkers = (map, markers) => {
+//   console.log('in the function', map, markers);
+//   markers.forEach((marker) => {
+//     const popup = new mapboxgl.Popup().setHTML(marker.infowindow);
+//     new mapboxgl.Marker()
+//     .setLngLat([ marker.lng, marker.lat ])
+//     .setPopup(popup)
+//     .addTo(map);
+//   });
+// };
+
+
+// const updateMap = (map) => {
+//   mapboxgl.accessToken = map.dataset.mapboxApiKey;
+
+//   const mapJs = new mapboxgl.Map({
+//     container: 'map',
+//     style: 'mapbox://styles/mapbox/streets-v10'
+//   });
+
+//   // console.log('@markers', `<%= @new_marker %>`)
+//   // markers = map.dataset.markers + "<%= raw(@new_marker.to_json) %>";
+//   // console.log('raw', <%= raw(@new_marker.to_json) %>);
+//   newMarker = <%= raw(@new_marker.to_json) %>;
+//   markers = JSON.parse(map.dataset.markers);
+//   markers.push(newMarker);
+//   console.log('markers', markers)
+
+//   fitMapToMarkers(mapJs, markers);
+//   addMarkers(mapJs, markers);
+//   // pathFinder(mapJs, markers);
+// }
+
+// map = document.getElementById('map');
+// updateMap(map);
+
+
+// re-load all markers in JS
+// re-run pathfinder function

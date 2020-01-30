@@ -1,0 +1,23 @@
+bookmarked = <%= @bookmarked %>
+itinerary = <%= @itinerary %>
+console.log(itinerary);
+targetTrue = document.querySelector(`#bookmark-show-true-${itinerary}`);
+targetFalse = document.querySelector(`#bookmark-show-false-${itinerary}`);
+
+if (bookmarked) {
+  console.log('update true');
+  targetTrue.style.display = 'block';
+  targetFalse.style.display = 'none';
+} else {
+  console.log('update false');
+  targetTrue.style.display = 'none';
+  targetFalse.style.display = 'block';
+}
+
+element = document.querySelector('#bookmark a');
+if (!<%= @bookmarks.size.positive? %>) {
+  element.innerHTML = '<i class="far fa-bookmark"></i>';
+} else {
+  element.innerHTML = '<i class="fas fa-bookmark"></i>';
+}
+

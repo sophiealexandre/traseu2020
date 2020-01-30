@@ -1,0 +1,100 @@
+/**
+ * Define variables
+ */
+$points        : 4;
+$demo_w        : 100%;
+$track_h       : 3px;
+$gutter        : 100% / ($points - 1);
+
+$_r    : 30px;
+$_r05  : $_r / 2;
+$_r025 : $_r05 / 2;
+$_b    : $_r / 6;
+$_mt   : ($track_h - $_r) * 0.5 - $track_h;
+
+$tint-track      : red;
+$tint-progress   : #3F3D56;
+$tint-complete   : #3F3D56;
+$tint-incomplete : lighten($tint-complete, 20%);
+
+/**
+ * Utility styles
+ */
+.inliner {
+  height: 100%;
+}
+
+.inliner,
+.inliner + .inlined {
+  display        : inline-block;
+  vertical-align : middle;
+}
+
+.inlined {
+  width: $demo_w;
+}
+
+
+/**
+ * Component styles
+ */
+%progress-meter-demo {
+  margin  : 20px auto 40px;
+  padding : 40px;
+}
+
+.progress-meter {
+  @extend %progress-meter-demo;
+
+  %check {
+
+    content          : "";
+    display          : block;
+    width            : $_r;
+    height           : $_r;
+    margin           : 0 auto $_r05;
+    border           : $_b solid $tint-complete;
+    text-align       : center;
+  }
+
+  .progress {
+    position   : relative;
+    height     : $track_h;
+    background-color: $tint-complete;
+  }
+
+  .progress-points {
+    position   : relative;
+    margin     : $_mt 0 0;
+    padding    : 0;
+    list-style : none;
+
+    @for $i from 1 through $points {
+      .progress-point:nth-child(#{$i}) {
+        left: ($i - 1) * $gutter;
+      }
+    }
+  }
+
+  .progress-point {
+    $_w : 100px;
+    $_ml: $_w / -2;
+
+    position    : absolute;
+    display     : block;
+    width       : $_w;
+    margin-left : $_ml;
+    text-align  : center;
+    cursor      : pointer;
+
+    &:before {
+      @extend %check;
+      border-radius: 50%;
+      background-color: #3F3D56;
+    }
+
+    &.active:before {
+      border-color: $tint-complete;
+    }
+  }
+}

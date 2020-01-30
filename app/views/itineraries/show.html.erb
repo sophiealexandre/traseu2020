@@ -1,0 +1,149 @@
+<div class="container-fluid m-0 p-0">
+  <div class="country-banner d-flex align-items-center justify-content-center" style="height: 196px;margin-top: -60px;background: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url(https://res.cloudinary.com/pierreja/image/upload/v1575223194/TRASEU/Traseu%20-%20Arequipa/BANNER%20-%20Arequipa2.jpg);background-position: center bottom;background-size: cover;">
+    <% itinerary = Itinerary.find_by(id: params[:id]) %>
+    <div class="country-name h1 mt-3"><%= itinerary.title.upcase %></div>
+  </div>
+</div>
+<div class="container-fluid pt-3 pb-5">
+  <div class="d-flex justify-content-between align-items-center px-2">
+    <div class="row justify-content-end align-items-center" style="padding-right: 32px;">
+      <div id="shared-by" class="m-0 ml-2" style="padding-bottom: 0px;">Experience shared by&nbsp;<%= link_to itinerary.user.first_name.capitalize, user_path(itinerary.user), class: "text-muted" %></div>
+      <div id="bookmark">
+        <% bookmark = Bookmark.find_by(user: current_user, itinerary: params[:id]) %>
+        <div id="bookmark-show-true-<%= params[:id] %>">
+          <%#= link_to raw('<i class="fas fa-star"></i>'), "#{itinerary_path(@itinerary)}", remote: true, method: :get, class: 'btn' %>
+          <%#= link_to raw('<i class="fas fa-star"></i>'), "#{bookmarks_path}?id=#{@bookmark.id}&itinerary=#{@bookmark.itinerary_id}", method: :delete, remote: true, class: 'btn' %>
+          <%= link_to raw('<i class="fas fa-bookmark"></i>'), itinerary_bookmarks_path(params[:id]), remote: true, method: :patch, class: 'btn bookmark', "data-itinerary": "#{params[:id]}", "data-bookmark": "#{bookmark ? true : false}" %>
+        </div>
+        <div id="bookmark-show-false-<%= params[:id] %>">
+          <%#= link_to raw('<i class="far fa-star"></i>'), "#{itinerary_path(@itinerary)}", remote: true, method: :post, class: 'btn' %>
+          <%= link_to raw('<i class="far fa-bookmark"></i>'), itinerary_bookmarks_path(params[:id]), remote: true, method: :patch, class: 'btn bookmark', "data-itinerary": "#{params[:id]}", "data-bookmark": "#{bookmark ? true : false}" %>
+        </div>
+      </div>
+      <div class="print">
+        <a href="/pages/print"><i class="fas fa-print"></i></a>
+      </div>
+    </div>
+    <a href="/itineraries/new?utf8=✓&search%5Bcountry%5D=peru&search%5Bcountry%5D=peru&search%5Bcountry%5D=peru&search%5Bcountry%5D=peru&search%5Bbudget%5D=1500&search%5Bdays%5D=15&button=&search%5Bexperience%5D=urban&search%5Bexperience%5D=adventure&search%5Bexperience%5D=culture&search%5Bexperience%5D=party" class="text-body">Back to search</a>
+  </div>
+  <div class="row">
+    <div class="col-6">
+
+      <% itinerary_city_array = [] %>
+      <% @itinerary.itinerary_cities.each do |itinerary_city| %>
+        <% itinerary_city_array << itinerary_city.city %>
+      <% end %>
+
+      <%# raise %>
+
+      <%#= @cities_names %>
+
+      <% @cities.each do |city| %>
+        <% restaurants = Spot.where(city_id: city.id, category_id: Category.find_by(title: "restaurant").id) %>
+        <% hotels = Spot.where(city_id: city.id, category_id: Category.find_by(title: "hotel").id) %>
+        <% activities = Spot.where(city_id: city.id, category_id: Category.find_by(title: "activity").id) %>
+        <div class="row m-0">
+          <% if itinerary_city_array.include?(city) %>
+            <% itinerary_city = ItineraryCity.find_by("itinerary_id = ? AND city_id = ?", @itinerary.id, city.id) %>
+            <%# raise %>
+            <!-- Card -->
+            <div id="city-id-<%= itinerary_city.city_id %>" class="card w-100 itinerary-show-city mt-3" data-itinerary-city="<%= itinerary_city.id %>" data-city="<%= itinerary_city.city_id %>">
+              <!-- Cities -->
+              <div class="w-100">
+                <div class="d-none <%= "city-delete-id-#{city.id}" %>">
+                  <%#= link_to "delete", "#{delete_itinerary_city_path(params[:id])}?itinerary_city=#{itinerary_city}", remote: true, method: :get, id: "city-delete-id-#{itinerary_city.id}", class: "city-toggler-delete", data: { lat: itinerary_city.city.latitude, lng: itinerary_city.city.longitude } %>
+                  <%= link_to "delete", itinerary_city_itinerary_cities_path(@itinerary, city), remote: true, method: :patch, id: "city-delete-id-#{city.id}", class: "city-toggler-delete", data: { lat: itinerary_city.city.latitude, lng: itinerary_city.city.longitude } %>
+                  <%= link_to "create", itinerary_city_itinerary_cities_path(@itinerary, city), remote: true, method: :patch, id: "city-create-id-#{city.id}", class: "city-toggler-create", data: { lat: city.latitude, lng: city.longitude } %>
+                </div>
+                <div class="px-3 d-flex justify-content-between align-items-center">
+                  <%= link_to itinerary_city.city.name.capitalize, "#{city_path(itinerary_city.city)}?itinerary=#{@itinerary.id}", class: "text-body lead" %>
+                  <div class="custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="switch-<%= itinerary_city.city_id %>">
+                    <label class="custom-control-label" for="switch-<%= itinerary_city.city_id %>"></label>
+                  </div>
+                </div>
+                <div id="city-id-<%= itinerary_city.city_id %>-details" class="itinerary-city-details">
+                  <div class="p-3">
+                    <p><%= city.description %></p>
+                    <table>
+                      <tr>
+                        <td class="text-center"><i class="fas fa-utensils pro-dark-blue"></i></td>
+                        <td class="pl-3"><%= restaurants.first.nil? ? "" : restaurants.first.title %></td>
+                      </tr>
+                      <tr>
+                        <td class="text-center"><i class="fas fa-bed pro-dark-blue"></i></td>
+                        <td class="pl-3"><%= hotels.first.nil? ? "" : hotels.first.title %></td>
+                      </tr>
+                      <tr>
+                        <td class="text-center"><i class="fas fa-binoculars pro-dark-blue"></i></td>
+                        <td class="pl-3"><%= activities.first.nil? ? "" : activities.first.title %></td>
+                      </tr>
+                    </table>
+                    <div class="text-right" style="margin-top: -24px;">
+                      <%= link_to "See more", "#{city_path(itinerary_city.city)}?itinerary=#{@itinerary.id}", class: "text-muted" %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- End Card -->
+          <% else %>
+            <!-- Card -->
+            <div id="city-id-<%= city.id %>" class="card city-select-none w-100 mt-3" data-itinerary-city="<%= city.id %>" data-city="<%= city.id %>">
+              <div class="w-100">
+                <div class="d-none">
+                  <%= link_to "create", itinerary_city_itinerary_cities_path(@itinerary, city), remote: true, method: :patch, id: "city-create-id-#{city.id}", class: "city-toggler-create", data: { lat: city.latitude, lng: city.longitude } %>
+                  <%= link_to "delete", itinerary_city_itinerary_cities_path(@itinerary, city), remote: true, method: :patch, id: "city-delete-id-#{city.id}", class: "city-toggler-delete", data: { lat: city.latitude, lng: city.longitude } %>
+                </div>
+                <div class="px-3 d-flex justify-content-between align-items-center">
+                  <%= link_to city.name.capitalize, "#{city_path(city)}?itinerary=#{@itinerary.id}", class: "text-body lead" %>
+                  <div class="custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="switch-<%= city.id %>">
+                    <label class="custom-control-label" for="switch-<%= city.id %>"></label>
+                  </div>
+                </div>
+                <div id="city-id-<%= city.id %>-details" class="itinerary-city-details">
+                  <div class="p-3">
+                    <p><%= city.description %></p>
+                    <table>
+                      <tr>
+                        <td class="text-center"><i class="fas fa-utensils pro-dark-blue"></i></td>
+                        <td class="pl-3"><%= restaurants.first.nil? ? "" : restaurants.first.title %></td>
+                      </tr>
+                      <tr>
+                        <td class="text-center"><i class="fas fa-bed pro-dark-blue"></i></td>
+                        <td class="pl-3"><%= hotels.first.nil? ? "" : hotels.first.title %></td>
+                      </tr>
+                      <tr>
+                        <td class="text-center"><i class="fas fa-binoculars pro-dark-blue"></i></td>
+                        <td class="pl-3"><%= activities.first.nil? ? "" : activities.first.title %></td>
+                      </tr>
+                    </table>
+                    <div class="text-right" style="margin-top: -24px;">
+                      <%= link_to "See more", "#{city_path(city)}?itinerary=#{@itinerary.id}", class: "text-muted" %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- End Card -->
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+    <div class="col-6">
+      <!-- <img src="https://github.com/PierreJaouen/traseu/blob/controllers-next/public/map.png?raw=true" alt="" width="100%"> -->
+      <!-- Map -->
+      <div class="d-flex flex-column align-items-center sticky-top" style="top: 68px;">
+        <div id="map" class="mt-3 mr-3" style="width: 100%;height: calc(100vh - 96px);"
+          data-mapbox-api-key="<%= ENV['MAPBOX_API_KEY'] %>"
+          data-markers="<%= @markers.to_json %>">
+        </div>
+        <div class="d-none"><i class="fas fa-file-download fa-2x" style="color:#3F3D56; margin: 1em"></i></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.5.1/mapbox-gl.js'></script>
+<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.5.1/mapbox-gl.css' rel='stylesheet' />

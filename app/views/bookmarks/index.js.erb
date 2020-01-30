@@ -1,0 +1,7 @@
+if (!<%= @bookmarks.size.positive? %>) {
+  element = document.querySelector('#bookmark a');
+  element.innerHTML = '<i class="far fa-star"></i>';
+}
+bookmark = document.querySelector('#bookmark-id-<%= @bookmark.id %>');
+if (bookmark) bookmark.remove();
+

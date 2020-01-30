@@ -1,0 +1,62 @@
+//types of banners
+
+.banner {
+    height: 100vh;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.banner-city-show {
+    height: 35vh;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.banner-itinerary-show {
+    height: 20vh;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.banner-text{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.banner_title {
+  width: 100%;
+  color: white;
+  text-align: center;
+}
+
+.btn-ghost {
+  color: #4A4A4A;
+  border: 1px solid #4A4A4A;
+  padding: 8px 24px;
+  border-radius: 70px;
+  font-weight: lighter;
+  opacity: 0.9;
+  transition: opacity 0.3s ease;
+  background-color: #FFCB21;
+  justify-content: center;
+  width: 33%;
+}
+
+.btn-ghost:hover {
+  opacity: 1;
+}

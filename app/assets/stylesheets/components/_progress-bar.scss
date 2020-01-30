@@ -1,0 +1,159 @@
+/**
+ * Define variables
+ */
+$points        : 4;
+$demo_w        : 100%;
+$track_h       : 4px;
+$track_h05     : $track_h / 2;
+$gutter        : 100% / ($points - 1);
+$duration      : 1s;
+
+$_r    : 45px;
+$_r05  : $_r / 2;
+$_r025 : $_r05 / 2;
+$_b    : $_r / 6;
+$_mt   : ($track_h - $_r) * 0.5 - $track_h;
+
+$tint-progress   : #3F3D56;
+$tint-complete   : #3F3D56;
+
+/**
+ * Utility styles
+ */
+.inliner {
+  height: 100%;
+}
+
+.inliner,
+.inliner + .inlined {
+  display: inline-block;
+}
+
+.inlined {
+  width: 100%;;
+}
+
+/**
+ * Component styles
+ */
+
+%progress-meter-demo {
+  margin  : 20px auto 40px;
+  padding : 40px;
+}
+
+.progress-meter {
+  @extend %progress-meter-demo;
+
+  counter-reset : point;
+
+  %check {
+
+
+    display          : block;
+    width            : $_r;
+    height           : $_r;
+    margin           : 0 auto $_r05;
+    text-align       : center;
+    background-color : white;
+    color            : white;
+  }
+
+  .track {
+    position   : relative;
+    height     : $track_h;
+  }
+
+  .progress {
+
+    display    : block;
+    position   : absolute;
+    left       : 0;
+    top        : 0;
+    width      : 0;
+    height     : $track_h;
+    background : $tint-progress;
+    transition: width 2.2s;
+  }
+
+  .progress-points {
+    position   : relative;
+    margin     : $_mt 0 0;
+    padding    : 0;
+    list-style : none;
+
+    @for $i from 1 through $points {
+      .progress-point:nth-child(#{$i}) {
+        left: ($i - 1) * $gutter;
+      }
+    }
+  }
+
+  .progress-point {
+    $_w : 100px;
+    $_ml: $_w / -2;
+
+    position    : absolute;
+    display     : block;
+    width       : $_w;
+    margin-left : $_ml;
+    text-align  : center;
+    cursor      : pointer;
+    color       : #999;
+
+    &:before {
+      display          : block;
+      width            : $_r;
+      height           : $_r;
+      margin           : 0 auto $_r05;
+      text-align       : center;
+      background-color : white;
+      color            : white;
+      border-radius: 50%;
+      background-color: #3F3D56;
+      opacity: 0;
+    }
+
+    &.completed,
+      &.active {
+      color: $tint-complete;
+    }
+
+    &.completed:before {
+      border-color     : $tint-complete;
+      background-color : $tint-complete;
+      opacity: 1;
+    }
+
+    &.pp1.completed:before {
+      font-family: "Font Awesome 5 Free";
+      text-align: center;
+      content: "\f5b6";
+      font-weight: 900;
+      line-height: 35px;
+    }
+
+    &.pp2.completed:before {
+      font-family: "Font Awesome 5 Free";
+      content: '\f5b0';
+      font-weight: 900;
+      line-height: 35px;
+    }
+
+    &.pp3.completed:before {
+      font-family: "Font Awesome 5 Free";
+      content: "\f155";
+      font-weight: 900;
+      line-height: 35px;
+    }
+
+    &.active:before {
+      border-color: #FFCB21;
+      background-color: #FFCB21;
+      opacity: 1;
+      transition: 1.2s;
+      content: "\00BB";
+      line-height: 30px;
+    }
+  }
+}

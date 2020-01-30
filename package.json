@@ -2,12 +2,14 @@
   "name": "traseu",
   "private": true,
   "dependencies": {
+    "@mapbox/mapbox-gl-geocoder": "^4.5.1",
     "@mapbox/polyline": "^1.1.0",
     "@rails/webpacker": "^4.2.0",
     "bootstrap": "^4.3.1",
     "jquery": "^3.4.1",
     "mapbox": "^1.0.0-beta10",
-    "mapbox-gl": "^1.5.1",
+    "mapbox-gl": "^1.7.0",
+    "places.js": "^1.17.1",
     "popper.js": "^1.16.0"
   },
   "devDependencies": {

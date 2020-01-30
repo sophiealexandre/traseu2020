@@ -11,12 +11,9 @@
       <div id="bookmark">
         <% bookmark = Bookmark.find_by(user: current_user, itinerary: params[:id]) %>
         <div id="bookmark-show-true-<%= params[:id] %>">
-          <%#= link_to raw('<i class="fas fa-star"></i>'), "#{itinerary_path(@itinerary)}", remote: true, method: :get, class: 'btn' %>
-          <%#= link_to raw('<i class="fas fa-star"></i>'), "#{bookmarks_path}?id=#{@bookmark.id}&itinerary=#{@bookmark.itinerary_id}", method: :delete, remote: true, class: 'btn' %>
           <%= link_to raw('<i class="fas fa-bookmark"></i>'), itinerary_bookmarks_path(params[:id]), remote: true, method: :patch, class: 'btn bookmark', "data-itinerary": "#{params[:id]}", "data-bookmark": "#{bookmark ? true : false}" %>
         </div>
         <div id="bookmark-show-false-<%= params[:id] %>">
-          <%#= link_to raw('<i class="far fa-star"></i>'), "#{itinerary_path(@itinerary)}", remote: true, method: :post, class: 'btn' %>
           <%= link_to raw('<i class="far fa-bookmark"></i>'), itinerary_bookmarks_path(params[:id]), remote: true, method: :patch, class: 'btn bookmark', "data-itinerary": "#{params[:id]}", "data-bookmark": "#{bookmark ? true : false}" %>
         </div>
       </div>

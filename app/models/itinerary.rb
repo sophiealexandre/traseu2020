@@ -1,6 +1,5 @@
 class Itinerary < ApplicationRecord
   belongs_to :user
-  add :remember_token to attr_accessible
   has_many :reviews
   has_many :bookmarks
   has_many :itinerary_cities, dependent: :destroy
